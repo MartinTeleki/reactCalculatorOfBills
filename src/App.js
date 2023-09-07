@@ -122,7 +122,7 @@ function OptionsServis({ handleOptionChangeService, billService }) {
     const options = [0, 5, 10, 20];
 
     return options.map((option) => (
-      <Option key={option} value={option} selected={billService === option}>
+      <Option key={option} value={option}>
         {serviceOptions[option]}
       </Option>
     ));
@@ -132,7 +132,9 @@ function OptionsServis({ handleOptionChangeService, billService }) {
     <>
       <p>
         How do you like the service?{" "}
-        <select onChange={handleOptionChangeService}>{renderOptions()}</select>
+        <select value={billService} onChange={handleOptionChangeService}>
+          {renderOptions()}
+        </select>
       </p>
     </>
   );
@@ -150,11 +152,7 @@ function OptionsFriend({ handleOptionChangeFriend, billFriendService }) {
     const options = [0, 5, 10, 20];
 
     return options.map((option) => (
-      <Option
-        key={option}
-        value={option}
-        selected={billFriendService === option}
-      >
+      <Option key={option} value={option}>
         {friendOptions[option]}
       </Option>
     ));
@@ -164,7 +162,9 @@ function OptionsFriend({ handleOptionChangeFriend, billFriendService }) {
     <>
       <p>
         How does your friend like the service?{" "}
-        <select onChange={handleOptionChangeFriend}>{renderOptions()}</select>
+        <select value={billFriendService} onChange={handleOptionChangeFriend}>
+          {renderOptions()}
+        </select>
       </p>
     </>
   );
@@ -185,17 +185,19 @@ function Summary({ billAmount, billService, billFriendService, reset }) {
   const totalBill = (totalAmount + serviceTip + friendTip).toFixed(2);
 
   return (
-    <div>
-      <p>
-        You pay {isNaN(billAmount) ? 0 : billAmount} ($
-        {billAmount} + ${isNaN(serviceTip) ? 0 : serviceTip} tip for service + $
-        {isNaN(friendTip) ? 0 : friendTip} tip for your friend. And together u
-        have paid ${isNaN(totalBill) ? 0 : totalBill})
-      </p>
-      <button type="button" onClick={reset}>
-        Reset
-      </button>
-    </div>
+    billAmount > 0 && (
+      <div>
+        <p>
+          You pay {isNaN(billAmount) ? 0 : billAmount} ($
+          {billAmount} + ${isNaN(serviceTip) ? 0 : serviceTip} tip for service +
+          ${isNaN(friendTip) ? 0 : friendTip} tip for your friend. And together
+          you have paid ${isNaN(totalBill) ? 0 : totalBill})
+        </p>
+        <button type="button" onClick={reset}>
+          Reset
+        </button>
+      </div>
+    )
   );
 }
 
