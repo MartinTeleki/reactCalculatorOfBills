@@ -182,7 +182,7 @@ function Summary({ billAmount, billService, billFriendService, reset }) {
   const totalAmount = parseFloat(billAmount);
   const serviceTip = parseFloat((totalAmount * billService) / 100);
   const friendTip = (totalAmount * billFriendService) / 100;
-  const totalBill = totalAmount + serviceTip + friendTip;
+  const totalBill = (totalAmount + serviceTip + friendTip).toFixed(2);
 
   return (
     <div>
